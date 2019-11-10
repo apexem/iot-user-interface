@@ -6,8 +6,12 @@
   height: 40vmin;
 }
 
+#buton {
+  background-color: #05386b;
+}
+
 .App-header {
-  background-color: #e0f3ff;
+  background-color: #d3e3fc;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

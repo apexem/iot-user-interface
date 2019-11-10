@@ -1,7 +1,7 @@
 import { LineChart, Tooltip, Line, XAxis, YAxis, CartesianGrid } from 'recharts'
 import React from 'react';
 
-const Chart = ({meas}) => {
+const Chart = ({ meas }) => {
 
     const customToolTip = ({ payload, label, active }) => {
         if (active && payload != null) {
@@ -38,6 +38,5 @@ const Chart = ({meas}) => {
         </LineChart>
     );
 }
-
 
 export default Chart;

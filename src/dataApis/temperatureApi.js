@@ -1,7 +1,20 @@
-const getTemperature = async () => {
-  const response = await fetch("https://localhost:5001/api/temperature");
+const webApiAddress = "https://localhost:3500";
+
+const collectMea = async (meaName) => {
+  const response = await fetch(webApiAddress + "/api/" + meaName + "/GetCurrent" + meaName);
+  return response.status;
+}
+
+const getAllMeas = async (meaName) => {
+  const response = await fetch(webApiAddress + "/api/" + meaName);
   const allMeas = await response.json();
   return allMeas;
+}
+
+const getMeaChartData = async (meaName) => {
+  const allMeas = await getAllMeas(meaName);
+  const formatted = meaName == "temperature" ? reformatTemperature(allMeas) : reformatAnalog(allMeas);
+  return formatted;
 }
 
 const reformatTemperature = (meas) => {
@@ -15,10 +28,27 @@ const reformatTemperature = (meas) => {
   return formattedData;
 }
 
-const getTemperatureChartData = async () => {
-  const allMeas = await getTemperature();
-  const formatted = reformatTemperature(allMeas);
-  return formatted;
+const reformatAnalog = (meas) => {
+  const formattedData = meas.map((m) => {
+    const mea = {
+      date: m.date,
+      value: m.voltage,
+    };
+    return mea;
+  });
+  return formattedData;
 }
 
-export {getTemperature, reformatTemperature, getTemperatureChartData};
+const setEspAddress = async (address) => {
+  const response = await fetch(webApiAddress + "/api/temperature/espAddress", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(address),
+    });
+  return response.status;
+}
+
+export {collectMea, setEspAddress, getAllMeas, reformatTemperature, reformatAnalog, getMeaChartData};

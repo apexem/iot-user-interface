@@ -3,8 +3,10 @@ import './App.css';
 import Button from 'react-bootstrap/Button';
 import * as temperatureApi from './dataApis/temperatureApi';
 import Chart from './components/Chart';
-import BurgerMenu from './components/BurgerMenu';
+import BurgerMenu from './components/BurgerMenu/BurgerMenu';
 import { Table, TableStyle } from './components/Table';
+import Input from './components/Input/Input';
+import Refresh from './components/Refresh/Refresh';
 
 const App = () => {
   const table = [
@@ -70,32 +72,39 @@ const App = () => {
     },
   ];
 
+  const [dataType, setDataType] = useState("temperature");
   const [tableData, setTableData] = useState(table);
   const [chartData, setChartData] = useState(chart);
 
-  const clickHandler = async () => {
-    //const data = await temperatureApi.getTemperatureChartData();
-    const xd = {
-      Id: 10,
-      date: "today",
-      Temperature: 30,
-    };
-    const hehe = [{
-      date:"XD",
-      value: 60.0,
-    }];
-
-    setChartData(hehe);
+  const refreshHandler = async () => {
+    const allMeas = await temperatureApi.getAllMeas(dataType);
+    const chartData = dataType == "temperature" ? temperatureApi.reformatTemperature(allMeas) : temperatureApi.reformatAnalog(allMeas);
+    setTableData(allMeas);
+    setChartData(chartData);
   };
+
+  const handleBurgerMenuClick = () => {
+    if(dataType === "temperature")
+      setDataType("analog");
+    else
+      setDataType("temperature");
+  }
+
+  const clickHandler = async () => {
+    await temperatureApi.collectMea(dataType);
+    await refreshHandler();
+  }
 
   return (
     <div className="App">
-      <BurgerMenu></BurgerMenu>
+      <Refresh clickHandler={refreshHandler}></Refresh>
+      <BurgerMenu changeDataType={handleBurgerMenuClick}></BurgerMenu>
       <header className="App-header">
-        <h2 style={{ color: "black" }}>Welcome!</h2>
-        <Button onClick={clickHandler} variant="primary">
-          ping api
-          </Button>
+        <div className="top">
+          <h2 style={{ color: "black" }}>Welcome!</h2>
+          <Button id="buton" onClick={clickHandler} variant="primary">Collect measurement</Button>
+          {/* <Input inputName="Set IP"></Input> */}
+        </div>
         <Chart meas={chartData} />
         <TableStyle>
           <Table data={tableData}></Table>
