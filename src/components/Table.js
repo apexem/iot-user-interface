@@ -78,37 +78,3 @@ const TableStyle = styled.div`
 `
 
 export {Table, TableStyle};
-
-  // const Table = meas => {
-
-  //   const [data, setData] = useState(meas);
-  //   const xd = {"border": "1px solid black"};
-
-  //   const getRows = () => {
-  //     return data.meas.map((mea) => {
-  //       const { Id, Date, ModuleName, Value } = mea //destructuring
-  //       return (
-  //         <tr style={xd} key={Id}>
-  //           <td style={xd}>{Id}</td>
-  //           <td style={xd}>{Date}</td>
-  //           <td style={xd}>{ModuleName}</td>
-  //           <td style={xd}>{Value}</td>
-  //         </tr>
-  //       );
-  //     });
-  //   }
-
-  //   return (
-  //     <div>
-  //       <h1 id='title'>All</h1>
-  //       <table style={{"border": "1px solid black"}} id='students'>
-  //         <tbody>
-  //         <th style={{"border": "1px solid black"}}> Id</th>
-  //         <th style={{"border": "1px solid black"}}> Date</th>
-  //         <th style={{"border": "1px solid black"}}> Temperature</th>
-  //         {getRows()}
-  //         </tbody>
-  //       </table>
-  //     </div>
-  //   )
-  // }

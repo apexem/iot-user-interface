@@ -1,4 +1,4 @@
-const webApiAddress = "https://localhost:3500";
+const webApiAddress = "http://localhost:3500";
 
 const collectMea = async (meaName) => {
   const response = await fetch(webApiAddress + "/api/" + meaName + "/GetCurrent" + meaName);
@@ -32,7 +32,7 @@ const reformatAnalog = (meas) => {
   const formattedData = meas.map((m) => {
     const mea = {
       date: m.date,
-      value: m.voltage,
+      value: m.analogInput,
     };
     return mea;
   });

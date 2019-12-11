@@ -1,13 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { slide as Menu } from 'react-burger-menu';
 import './BurgerMenu.css';
    
-const BurgerMenu = ({changeDataType}) => {
+const BurgerMenu = ({dhtClicked, analogClicked, isDhtSelected, isAnalogSelected}) => {
 
     return (
     <Menu width="150px">
-          <bmBurgerButton onClick={changeDataType}>DHT11</bmBurgerButton>
-          <bmBurgerButton onClick={changeDataType}>Analog</bmBurgerButton>
+      <p onClick={dhtClicked} style={isDhtSelected == true ? {color: 'red'} : null}>DHT11</p>
+      <p onClick={analogClicked} style={isAnalogSelected == true ? {color: 'red'} : null}>Analog Input</p>
     </Menu>
     );
   }

@@ -8,7 +8,7 @@ const Chart = ({ meas }) => {
             return (
                 <div className="custom-tooltip">
                     <p style={{ color: "black", fontSize: "16px", paddingTop: "13px" }} className="label">Date: {label}</p>
-                    <p style={{ color: "black", fontSize: "16px" }} className="label">'Measurement: {payload[0].value}'</p>
+                    <p style={{ color: "black", fontSize: "16px" }} className="label">Measurement: {payload[0] === undefined ? 0 : payload[0].value}</p>
                 </div>
             )
         }

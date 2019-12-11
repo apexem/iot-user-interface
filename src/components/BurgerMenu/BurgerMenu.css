@@ -5,6 +5,7 @@
     height: 30px;
     left: 36px;
     top: 36px;
+    color: black
   }
   
   /* Color/shape of burger icon bars */
@@ -53,11 +54,13 @@
   .bm-item-list {
     color: #b8b7ad;
     padding: 0.8em;
+    text-align: justify;
   }
   
   /* Individual item */
   .bm-item {
     display: inline-block;
+    text-align: center;
   }
   
   /* Styling of overlay */

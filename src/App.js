@@ -75,19 +75,28 @@ const App = () => {
   const [dataType, setDataType] = useState("temperature");
   const [tableData, setTableData] = useState(table);
   const [chartData, setChartData] = useState(chart);
+  const [isDhtSelected, setIsDhtSelected] = useState(true);
+  const [isAnalogSelected, setIsAnalogSelected] = useState(false);
 
   const refreshHandler = async () => {
     const allMeas = await temperatureApi.getAllMeas(dataType);
     const chartData = dataType == "temperature" ? temperatureApi.reformatTemperature(allMeas) : temperatureApi.reformatAnalog(allMeas);
     setTableData(allMeas);
     setChartData(chartData);
-  };
+  }
 
-  const handleBurgerMenuClick = () => {
-    if(dataType === "temperature")
-      setDataType("analog");
-    else
-      setDataType("temperature");
+  const dhtClicked = async () => {
+    setDataType("temperature");
+    setIsDhtSelected(true);
+    setIsAnalogSelected(false);
+    await refreshHandler();
+  }
+
+  const analogClicked = async () => {
+    setDataType("analog");
+    setIsDhtSelected(false);
+    setIsAnalogSelected(true);
+    await refreshHandler();
   }
 
   const clickHandler = async () => {
@@ -98,7 +107,8 @@ const App = () => {
   return (
     <div className="App">
       <Refresh clickHandler={refreshHandler}></Refresh>
-      <BurgerMenu changeDataType={handleBurgerMenuClick}></BurgerMenu>
+      <BurgerMenu dhtClicked={dhtClicked} analogClicked={analogClicked} 
+        isDhtSelected={isDhtSelected} isAnalogSelected={isAnalogSelected}></BurgerMenu>
       <header className="App-header">
         <div className="top">
           <h2 style={{ color: "black" }}>Welcome!</h2>
